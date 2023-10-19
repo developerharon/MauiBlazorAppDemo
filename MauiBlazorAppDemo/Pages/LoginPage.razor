@@ -1,0 +1,32 @@
+﻿@page "/"
+@layout IdentityLayout
+@inherits ComponentBase
+
+<EditForm Model="loginModel" OnValidSubmit="LoginUserAsync">
+    <DataAnnotationsValidator />
+
+    <MudText Typo="Typo.h4" GutterBottom="true">Sign In</MudText>
+
+    <MudText>Don't have an account? <MudLink Href="/user/register">Sign Up</MudLink></MudText>
+
+    @if (!string.IsNullOrEmpty(message))
+    {
+        <div class="my-6">
+            <MudAlert Severity="Severity.Error" Variant="Variant.Filled">@message</MudAlert>
+        </div>
+    }
+
+    <MudTextField @bind-Value="loginModel.Email" Label="Email" Variant="Variant.Outlined" Class="my-6"
+        For="@(() => loginModel.Email)"/>
+
+    <MudTextField @bind-Value="loginModel.Password" Label="Password" Variant="Variant.Outlined" 
+        InputType="@passwordInputType" Adornment="Adornment.End" AdornmentIcon="@passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility"
+        For="@(() => loginModel.Password)"/>
+
+    <div class="d-flex justify-space-between align-center">
+        <MudCheckBox T="bool" Label="Remember me?" Color="Color.Primary" Class="ml-n1 my-3"></MudCheckBox>
+        <MudLink Href="/user/forgot-password">Forgot password?</MudLink>
+    </div>
+
+    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" FullWidth="true">Sign In</MudButton>
+</EditForm>
